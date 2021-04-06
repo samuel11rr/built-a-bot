@@ -1,5 +1,12 @@
 <template>
   <div id="app">
+    <!-- Root foo: {{ rootFoo }}
+    Robots foo: {{ robotsFoo }}
+    Users foo: {{ usersFoo }}
+    <br>
+    Root getter foo: {{ rootGetterFoo }}
+    Robots getter foo: {{ robotsGetterFoo }} -->
+
     <header>
       <nav>
         <ul>
@@ -41,11 +48,20 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex';
+
 export default {
   name: 'App',
   computed: {
+    ...mapState({
+      rootFoo: 'foo',
+      usersFoo: (state) => state.users.foo,
+    }),
+    ...mapState('robots', { robotsFoo: 'foo' }),
+    ...mapGetters({ rootGetterFoo: 'foo' }),
+    ...mapGetters('robots', { robotsGetterFoo: 'foo' }),
     cart() {
-      return this.$store.state.cart;
+      return this.$store.state.robots.cart;
     },
   },
 };
